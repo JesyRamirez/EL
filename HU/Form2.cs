@@ -20,7 +20,8 @@ namespace HU
         string val4 = "";
         string val5 = "";
         public string Item = "";
-        Form1 ff1 = new Form1();
+        public string qty = "";
+      //  Form1 ff1 = new Form1("");
         public Form2()
         {
             InitializeComponent();
@@ -150,7 +151,7 @@ namespace HU
                 catch (Exception ex) { MessageBox.Show("Error... " + "\n" + ex); }
             }
         }
-        private void item(string arch) {
+        public void item(string arch) {
             string val = "";
             string item;
             StreamReader archivo = File.OpenText(@"C:\Users\Jesy\Desktop\origen\" + arch);
@@ -201,6 +202,7 @@ namespace HU
                 val5 = numv.ToString();
             }
             Item = val1 + val3;
+            qty = val2;
             archivo.Close();
             info.Text +=string.Concat("Item: "+Item, "\n","Quantity: "+val2, "\n","Color: " +val3,"\n", "HU: "+val5,"\n", "-----------------------------------------------------","\n");
             insertbd(val1+val3,val2,val4,val5,val6);
@@ -241,7 +243,7 @@ namespace HU
             MyConn2.Close();
             return exis;
         }
-        private string ver1() {
+        public string ver1() {
             string exis1 = "";
             string MyConnection2 = "server=localhost;uid=root;" +
                 "pwd=;database=prueba;SslMode=none";
@@ -268,7 +270,7 @@ namespace HU
             System.IO.File.Move(sourceFile,destinationFile);
             MessageBox.Show("Moved file");
         }
-        private void txt() {
+        public void TEXT() {
             //para buscar los txt en la carpeta origen y almacenarlos en una variable
             string[] dirs = Directory.GetFiles(@"C:\Users\Jesy\Desktop\origen\", "*.txt");
             int cantidad = dirs.Length;
@@ -279,7 +281,7 @@ namespace HU
                     arch = dirs[h];
                     arch = arch.Replace(@"C:\Users\Jesy\Desktop\origen\", "");
                     //está con la condicion de for, checar si es posible meter un while para que se vayan creando los archivos
-                    ff1.conXML(arch);
+                    //ff1.conXML(arch);
                     line(arch);
                     
                 }
@@ -295,14 +297,14 @@ namespace HU
 
         private void tiempo_Tick(object sender, EventArgs e)
         {
-            txt();
+            TEXT();
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
             tiempo.Stop();
-            Form1 man = new Form1();
-            //agregarlo a la lista, como? :v
+            Form1 man = new Form1(Item, qty);
+           
             //se puede poner con un .text?
            // man.listView1 = listView1.Items;
             man.info.Text = info.Text;

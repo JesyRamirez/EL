@@ -22,11 +22,14 @@ namespace HU
         string val3 = "";
         string val4 = "";
         string val5 = "";
-     
+        string usarItem;
+        string usarQty;
     
-        public Form1()
+        public Form1(string Item, string qty)
         {
             InitializeComponent();
+            usarItem = Item;
+            usarQty = qty;
 
         }
 
@@ -54,7 +57,6 @@ namespace HU
 
         private void item(string arch) {
             string val = "";
-            string item;
             StreamReader archivo = File.OpenText(@"C:\Users\Jesy\Desktop\origen\" + arch);//save text file
             string line = null;
             int i = 1;
@@ -507,8 +509,8 @@ namespace HU
 
 
           }
-          public static void WriteXML() {     
-            Form1 ff = new Form1();
+          public  void WriteXML() {     
+           // Form1 ff = new Form1("");
             Form2 ff2 = new Form2();
             Book overview = new Book();
               overview.title = "XML prueba";
@@ -522,29 +524,30 @@ namespace HU
             overview.DataArea = "";
             overview.Sync = "";
             overview.TenantID = "infor";
-            overview.AccountingEntityID = "640";
-            overview.LocationID = "S_640";
+            overview.AccountingEntityID = "640";//Leon indicators
+            overview.LocationID = "S_640";//Leon indicators
             overview.ActionCriteria = "";
             overview.ActionExpression_actionCode = "Add";
             overview.MESInterface = "";
-            overview.MESHeader = "";
-            overview.MESOrderNo = "DVR01180524094404763";//automatico por maquina, se tiene DV01, DV02, DV03...
-            overview.Item = ff2.info.ToString();//cambiar por las capturas de las lineas
+            overview.MESHeader = "\n"+"\n";
+            //------------------------------DYNAMIC INFORMATION FROM MACHINES--------------------------------
+            overview.MESOrderNo = "DVR01"+ DateTime.Now.ToString("yyMMddhhmmssfff");//cambiar dependiendo si el txt tiene la informacion referente a la maquina DVR01, DVR02...
+            overview.Item = usarItem.ToString(); //valores del constructor de la clase Form2
             overview.MESCompletion = "";
-            overview.Spool = ff.ver1();//cambiar por valor del txt o el consecutivo o lo genera automaticamente la maquina
+            overview.Spool = ff2.ver1();//ultimo numero almacenado en db 
             overview.Date = DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss"); ;//cambiar por valor de linea
-            overview.LotNumber = ff.ver1();//cambiar por valor de linea
+            overview.LotNumber = ff2.ver1();//cambiar por valor del txt que viene de la maquina
             overview.Warehouse = "LHBFG1";
-            overview.Quantity = "4088";   //modificar con la cantidad del txt
-            
+            overview.Quantity = usarQty.ToString();   //modificar con la cantidad del txt
+            //------------------------------------------------------------------------------------------------
               System.Xml.Serialization.XmlSerializer writer =
                   new System.Xml.Serialization.XmlSerializer(typeof(Book));
 
               var path = @"C:\Users\Jesy\Desktop\" + "XMLPrueba.xml";
               System.IO.FileStream file = System.IO.File.Create(path);
               writer.Serialize(file, overview);
-              MessageBox.Show("Se realizo el archivo xml");
-              file.Close();
+            MessageBox.Show("XML SUCCESFUL");
+          file.Close();
             //return exis;
         }
         public void conXML(string archivo)
@@ -565,6 +568,11 @@ namespace HU
                 xml.Save(Path.ChangeExtension(@"C:\Users\Jesy\Desktop\archive\", "PRUEBAXML.xml"));
                 MessageBox.Show("Se generó el archivo con éxito");
         
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            upStatusOK();
         }
     }
 }
