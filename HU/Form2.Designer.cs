@@ -34,6 +34,7 @@
             this.label1 = new System.Windows.Forms.Label();
             this.info = new System.Windows.Forms.RichTextBox();
             this.listView1 = new System.Windows.Forms.ListView();
+            this.itemm = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.primary = new System.Windows.Forms.Button();
             this.marking = new System.Windows.Forms.Button();
             this.retraction = new System.Windows.Forms.Button();
@@ -44,7 +45,6 @@
             this.spinning = new System.Windows.Forms.Button();
             this.report = new System.Windows.Forms.RichTextBox();
             this.tiempo = new System.Windows.Forms.Timer(this.components);
-            this.itemm = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.SuspendLayout();
             // 
             // button1
@@ -242,7 +242,6 @@
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.RichTextBox info;
         private System.Windows.Forms.ListView listView1;
         private System.Windows.Forms.Button primary;
         private System.Windows.Forms.Button marking;
@@ -255,5 +254,6 @@
         private System.Windows.Forms.RichTextBox report;
         private System.Windows.Forms.Timer tiempo;
         private System.Windows.Forms.ColumnHeader itemm;
+        public System.Windows.Forms.RichTextBox info;
     }
 }

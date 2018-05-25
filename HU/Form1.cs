@@ -529,13 +529,14 @@ namespace HU
             overview.MESInterface = "";
             overview.MESHeader = "";
             overview.MESOrderNo = "DVR01180524094404763";//automatico por maquina, se tiene DV01, DV02, DV03...
-            overview.Item =ff2.Item.ToString();//cambiar por las capturas de las lineas
+            overview.Item = ff2.info.ToString();//cambiar por las capturas de las lineas
             overview.MESCompletion = "";
-            overview.Spool = "115306159";//cambiar por valor de linea
+            overview.Spool = ff.ver1();//cambiar por valor del txt o el consecutivo o lo genera automaticamente la maquina
             overview.Date = DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss"); ;//cambiar por valor de linea
-            overview.LotNumber = "114218954";//cambiar por valor de linea
+            overview.LotNumber = ff.ver1();//cambiar por valor de linea
             overview.Warehouse = "LHBFG1";
-            overview.Quantity = "4088";             
+            overview.Quantity = "4088";   //modificar con la cantidad del txt
+            
               System.Xml.Serialization.XmlSerializer writer =
                   new System.Xml.Serialization.XmlSerializer(typeof(Book));
 
