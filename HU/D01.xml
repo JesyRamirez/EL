@@ -1,0 +1,36 @@
+﻿<?xml version="1.0"?>
+<!-- @author: CMES COF:LEON @date: 2018-05-24 09:42:24 -->
+<SyncMESInterface versionID="2.12.x" releaseID="9.2" xmlns="http://schema.infor.com/InforOAGIS/2">
+  <ApplicationArea>
+    <Sender>
+      <LogicalID>lid://infor.file.bod_in</LogicalID>
+      <ComponentID>file</ComponentID>
+      <ConfirmationCode>OnError</ConfirmationCode>
+    </Sender>
+    <CreationDateTime>2017-01-02T00:00:01Z</CreationDateTime>
+    <BODID>infor-nid:infor:640:S_640:A99000001:?MESInterface&verb=Sync</BODID>
+  </ApplicationArea>
+  <DataArea>
+    <Sync>
+      <TenantID>infor</TenantID>
+      <AccountingEntityID>640</AccountingEntityID>
+      <LocationID>S_640</LocationID>
+      <ActionCriteria>
+        <ActionExpression actionCode="Add"/>
+      </ActionCriteria>
+    </Sync>
+    <MESInterface>
+      <MESHeader>
+        <MESOrderNo>DVR01180524094404763</MESOrderNo>
+        <Item> 31YFF01508005</Item>
+        <MESCompletion>
+          <Spool>115306159</Spool>
+          <Date>2018-05-24 15:42:24</Date>
+          <LotNumber>usarLot.ToString();</LotNumber>
+          <Warehouse>LHBFG1</Warehouse>
+          <Quantity>4088</Quantity>
+        </MESCompletion>
+      </MESHeader>
+    </MESInterface>
+  </DataArea>
+</SyncMESInterface>
