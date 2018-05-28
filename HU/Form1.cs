@@ -24,12 +24,14 @@ namespace HU
         string val5 = "";
         string usarItem;
         string usarQty;
+        string usarLot;
     
-        public Form1(string Item, string qty)
+        public Form1(string Item, string qty, string lot)
         {
             InitializeComponent();
             usarItem = Item;
             usarQty = qty;
+            usarLot = lot;
 
         }
 
@@ -536,7 +538,7 @@ namespace HU
             overview.MESCompletion = "";
             overview.Spool = ff2.ver1();//ultimo numero almacenado en db 
             overview.Date = DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss"); ;//cambiar por valor de linea
-            overview.LotNumber = ff2.ver1();//cambiar por valor del txt que viene de la maquina
+            overview.LotNumber = usarLot.ToString();//lote come from 3rd line on txt file by machines
             overview.Warehouse = "LHBFG1";
             overview.Quantity = usarQty.ToString();   //modificar con la cantidad del txt
             //------------------------------------------------------------------------------------------------

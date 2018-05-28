@@ -19,8 +19,10 @@ namespace HU
         string val3 = "";
         string val4 = "";
         string val5 = "";
+        
         public string Item = "";
         public string qty = "";
+        public string lot = "";
       //  Form1 ff1 = new Form1("");
         public Form2()
         {
@@ -203,6 +205,7 @@ namespace HU
             }
             Item = val1 + val3;
             qty = val2;
+            lot = val4;
             archivo.Close();
             info.Text +=string.Concat("Item: "+Item, "\n","Quantity: "+val2, "\n","Color: " +val3,"\n", "HU: "+val5,"\n", "-----------------------------------------------------","\n");
             insertbd(val1+val3,val2,val4,val5,val6);
@@ -303,7 +306,7 @@ namespace HU
         private void button2_Click(object sender, EventArgs e)
         {
             tiempo.Stop();
-            Form1 man = new Form1(Item, qty);
+            Form1 man = new Form1(Item, qty, lot);
            
             //se puede poner con un .text?
            // man.listView1 = listView1.Items;
