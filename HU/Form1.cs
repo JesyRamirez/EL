@@ -22,6 +22,8 @@ namespace HU
         string val3 = "";
         string val4 = "";
         string val5 = "";
+        string val7 = "";
+        string val8 = "";
         string usarItem;
         string usarQty;
         string usarLot;
@@ -137,7 +139,11 @@ namespace HU
                 {
                     val4 = line;
                 }
-                
+                if (i == 7)
+                {
+                    val7 = line;
+                }
+
                 i++;
                 
             }
@@ -157,24 +163,24 @@ namespace HU
             archivo.Close();
 
             // info.Text = info.Text+string.Format("Information qty: {0} item: {1} ",val2,val1,Environment.NewLine);//colocar una nueva linea para mostrar la info
-            info.Text += string.Concat("Item: " + val1 + val3, "\n", "Quantity: " + val2, "\n", "Color: " + val3, "\n", "HU: " + val5,"\n", "-----------------------------------------------------", "\n");
+            info.Text += string.Concat("Item: " + val1 + val3, "\n", "Quantity: " + val2, "\n", "Color: " + val3, "\n", "HU: " + val5, "Type: " + val7,"\n", "-----------------------------------------------------", "\n");
            
             // info.Text = val2 + val1 + val3 + val4 + val5;
             //  MessageBox.Show("Item: " + val1 + "\nQty: " + val2 + "\nlot: " + val4 + "\nColor: " + val3);
-            insertbd(val1 + val3, val2, val4, val5,val6);
+            insertbd(val1 + val3, val2, val4, val5,val6, val7);
             item(arc);
             save(arc);
            
         }
 
         //insert specific data on DB
-        private void insertbd(string var1, string var2, string var4, string var5, string var6)
+        private void insertbd(string var1, string var2, string var4, string var5, string var6, string var7)
         {
             string MyConnection2 = "server=localhost;uid=root;" +
            "pwd=;database=prueba;SslMode=none";
 
             //ya se inserta, pero son los numeros
-            string Query = "insert into prueba.inicial(item,qty,lot,hu,status) values('" + var1 + "'," + "'" + var2 + "'," + "'" + var4 + "'," + "'" + var5 + "'," + "'" + var6 + "');";
+            string Query = "insert into prueba.inicial(item,qty,lot,hu,status) values('" + var1 + "'," + "'" + var2 + "'," + "'" + var4 + "'," + "'" + var5 + "'," + "'" + var6 + "'," + "'" + var7 + "');";
 
             MySqlConnection MyConn2 = new MySqlConnection(MyConnection2);
             MySqlCommand MyCommand2 = new MySqlCommand(Query, MyConn2);
