@@ -19,6 +19,9 @@ namespace HU
         string val3 = "";
         string val4 = "";
         string val5 = "";
+        string val6 = "";
+        string val7 = "";//tipo de cable
+        string val8 = "";//fecha
         
         public string Item = "";
         public string qty = "";
@@ -190,10 +193,11 @@ namespace HU
             int numv = 0;
             while ((!archivo.EndOfStream)) {
                 line = archivo.ReadLine();
-                if (i==1) { val2 = line; }
-                if (i==11) { val1 = line; }
-                if (i==15) { val3 = line; }
-                if (i==3) { val4 = line; }
+                if (i==1) { val2 = line; }//qty
+                if (i==11) { val1 = line; }//descripcion cable
+                if (i==15) { val3 = line; }//color
+                if (i==3) { val4 = line; }//spool
+                if (i==7) { val7 = line; }//tipo de cable
                 i++;
             }
             tmpex = ver();
@@ -203,21 +207,22 @@ namespace HU
                 numv = int.Parse(tmpul)+1;
                 val5 = numv.ToString();
             }
+            val8= DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss");
             Item = val1 + val3;
             qty = val2;
             lot = val4;
             archivo.Close();
             info.Text +=string.Concat("Item: "+Item, "\n","Quantity: "+val2, "\n","Color: " +val3,"\n", "HU: "+val5,"\n", "-----------------------------------------------------","\n");
-            insertbd(val1+val3,val2,val4,val5,val6);
+            insertbd(val1+val3,val2,val4,val5,val6, val8,val7);
             item(arc);
             save(arc);
             
         }
         //insert db
-        private void insertbd(string var1, string var2, string var4, string var5, string var6) {
+        private void insertbd(string var1, string var2, string var4, string var5, string var6,string var7, string var8) {
             string MyConnection2 = "server=localhost;uid=root;" +
                 "pwd=;database=prueba;SslMode=none";
-            string Query = "insert into prueba.inicial(item,qty,lot,hu,status) values ('" + var1 + "',"+ "'"+ var2 + "', " + "'"+ var4 + "', "+ "'"+var5+"',"+"'"+var6+"');";
+            string Query = "insert into prueba.inicial(item,qty,lot,hu,status,fecha,tipo) values ('" + var1 + "',"+ "'"+ var2 + "', " + "'"+ var4 + "', "+ "'"+var5+"',"+"'"+var6+ "'," + "'" + var7 + "'," + "'" + var8 + "');";
 
             MySqlConnection MyConn2 = new MySqlConnection(MyConnection2);
             MySqlCommand MyCommand2 = new MySqlCommand(Query, MyConn2);

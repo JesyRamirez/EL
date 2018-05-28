@@ -16,14 +16,14 @@ namespace HU {
     using CrystalDecisions.CrystalReports.Engine;
     
     
-    public class prueba : ReportClass {
+    public class labelOK : ReportClass {
         
-        public prueba() {
+        public labelOK() {
         }
         
         public override string ResourceName {
             get {
-                return "prueba.rpt";
+                return "labelOK.rpt";
             }
             set {
                 // Do nothing
@@ -41,7 +41,7 @@ namespace HU {
         
         public override string FullResourceName {
             get {
-                return "HU.prueba.rpt";
+                return "HU.labelOK.rpt";
             }
             set {
                 // Do nothing
@@ -90,9 +90,9 @@ namespace HU {
     }
     
     [System.Drawing.ToolboxBitmapAttribute(typeof(CrystalDecisions.Shared.ExportOptions), "report.bmp")]
-    public class Cachedprueba : Component, ICachedReport {
+    public class CachedlabelOK : Component, ICachedReport {
         
-        public Cachedprueba() {
+        public CachedlabelOK() {
         }
         
         [Browsable(false)]
@@ -129,7 +129,7 @@ namespace HU {
         }
         
         public virtual CrystalDecisions.CrystalReports.Engine.ReportDocument CreateReport() {
-            prueba rpt = new prueba();
+            labelOK rpt = new labelOK();
             rpt.Site = this.Site;
             return rpt;
         }
