@@ -212,8 +212,9 @@ namespace HU
             qty = val2;
             lot = val4;
             archivo.Close();
-            info.Text +=string.Concat("Item: "+Item, "\n","Quantity: "+val2, "\n","Color: " +val3,"\n", "HU: "+val5,"\n", "-----------------------------------------------------","\n");
-            insertbd(val1+val3,val2,val4,val5,val6, val8,val7);
+            info.Text +=string.Concat("Item: "+Item, "\n","Quantity: "+val2, "\n","Color: " +val3,"\n", "HU: "+val5, "Type: " + val7, "\n", "-----------------------------------------------------","\n");
+            insertbd(val1+val3,val2,val4,val5,val6, val8, val7);
+                     //item    qty  lot  hu  status fecha tipo
             item(arc);
             save(arc);
             
