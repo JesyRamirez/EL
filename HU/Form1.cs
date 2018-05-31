@@ -12,6 +12,7 @@ using MySql.Data.MySqlClient;
 using System.Xml;
 using System.Xml.Linq;
 
+
 namespace HU
 {
     public partial class Form1 : Form
@@ -24,10 +25,11 @@ namespace HU
         string val5 = "";
         string val7 = "";
         string val8 = "";
+        string val9 = "";
         string usarItem;
         string usarQty;
         string usarLot;
-    
+
         public Form1(string Item, string qty, string lot)
         {
             InitializeComponent();
@@ -59,12 +61,14 @@ namespace HU
                 this.marking.BackColor = Color.Green;
         }
 
-        private void item(string arch) {
+        private void item(string arch)
+        {
             string val = "";
             StreamReader archivo = File.OpenText(@"C:\Users\Jesy\Desktop\origen\" + arch);//save text file
             string line = null;
             int i = 1;
-            while ((!archivo.EndOfStream)) {
+            while ((!archivo.EndOfStream))
+            {
                 line = archivo.ReadLine();
                 if (i == 11)
                 {
@@ -76,7 +80,7 @@ namespace HU
                     val3 = line;
                 }
                 i++;
-               
+
             }
             archivo.Close();
             report.Text += string.Concat(val1 + val3);
@@ -107,7 +111,7 @@ namespace HU
 
             string line = null;
             int i = 1;
-            
+
             string val6 = "WAITING";
 
             string tmpex = "";
@@ -123,13 +127,13 @@ namespace HU
                 {
 
                     val2 = line;
-                    
+
                 }
 
                 if (i == 11)
                 {
                     val1 = line;
-                   
+
                 }
                 if (i == 15)
                 {
@@ -143,11 +147,15 @@ namespace HU
                 {
                     val7 = line;
                 }
+                if (i == 8)
+                {
+                    val9 = line;
+                }
 
                 i++;
-                
+
             }
-            
+
 
             tmpex = ver();
             if (int.Parse(tmpex) == 0)
@@ -163,14 +171,14 @@ namespace HU
             archivo.Close();
 
             // info.Text = info.Text+string.Format("Information qty: {0} item: {1} ",val2,val1,Environment.NewLine);//colocar una nueva linea para mostrar la info
-            info.Text += string.Concat("Item: " + val1 + val3, "\n", "Quantity: " + val2, "\n", "Color: " + val3, "\n", "HU: " + val5, "Type: " + val7,"\n", "-----------------------------------------------------", "\n");
-           
+            info.Text += string.Concat("Item: " + val1 + val3, "\n", "Quantity: " + val2, "\n", "Color: " + val3, "\n", "HU: " + val5, "Type: " + val7, "\n", "-----------------------------------------------------", "\n");
+
             // info.Text = val2 + val1 + val3 + val4 + val5;
             //  MessageBox.Show("Item: " + val1 + "\nQty: " + val2 + "\nlot: " + val4 + "\nColor: " + val3);
-            insertbd(val1 + val3, val2, val4, val5,val6, val7);
+            insertbd(val1 + val3, val2, val4, val5, val6, val7 + "" + val9);
             item(arc);
             save(arc);
-           
+
         }
 
         //insert specific data on DB
@@ -256,11 +264,12 @@ namespace HU
             // To move a file or folder to a new location:
             System.IO.File.Move(sourceFile, destinationFile);
             MessageBox.Show("Moved file");
-           // upStatus();
+            // upStatus();
         }
 
         //all the files are taken from the origin folder and send to different folder
-        private void txt() { 
+        private void txt()
+        {
             string[] dirs = Directory.GetFiles(@"C:\Users\Jesy\Desktop\origen\", "*.txt");
             int cantidad = dirs.Length;
             string arch = "";
@@ -271,15 +280,15 @@ namespace HU
                 {
                     arch = dirs[h];
                     arch = arch.Replace(@"C:\Users\Jesy\Desktop\origen\", "");
-                  //  info.Text = arch +"\n" + "File moved";
+                    //  info.Text = arch +"\n" + "File moved";
                     line(arch);
                     //MessageBox.Show(arch);
                 }
             }
 
-            
+
         }
-    
+
         private void button2_Click_1(object sender, EventArgs e)
         {
 
@@ -289,7 +298,7 @@ namespace HU
             //cantidadtxt();
             tiempo.Enabled = true;
             tiempo.Start();
-           
+
             // info.Text += string.Concat("Item: " + val1 + val3, "\n", "Quantity: " + val2, "\n", "Color: " + val3, "\n", "HU: " + val5, "\n", "File name: ", info.Text, "\n", "-----------------------------------------------------", "\n", info.Text, "\n");
         }
 
@@ -304,13 +313,15 @@ namespace HU
         }
 
         //status are updating by this method
-        private void upStatusOK() {
+        private void upStatusOK()
+        {
             string status = "OK PRODUCTION";
             string status1 = "NOK PRODUCTION";
             string item = "";
             item = report.Text;
             // MessageBox.Show(item);
-            if ((primary.BackColor.Equals(Color.Green)) && (marking.BackColor.Equals(Color.Green)) && (retraction.BackColor.Equals(Color.Green)) && (insulator.BackColor.Equals(Color.Green)) && (secondary.BackColor.Equals(Color.Green))) {
+            if ((primary.BackColor.Equals(Color.Green)) && (marking.BackColor.Equals(Color.Green)) && (retraction.BackColor.Equals(Color.Green)) && (insulator.BackColor.Equals(Color.Green)) && (secondary.BackColor.Equals(Color.Green)))
+            {
                 try
                 {
                     string conn = "server=localhost;uid=root;" +
@@ -323,14 +334,15 @@ namespace HU
                     con.Open();
                     read = com.ExecuteReader();
                     MessageBox.Show("Data updated");
-                    while (read.Read()) { }
+                    while (read.Read()) { }//ciclo para validar los iems? 
                     con.Close();
 
                 }
                 catch (Exception e) { }
-        }
+            }
             //STATUS NOK
-            else if((primary.BackColor.Equals(Color.Red)) || (marking.BackColor.Equals(Color.Red)) || (retraction.BackColor.Equals(Color.Red)) || (insulator.BackColor.Equals(Color.Red)) || (secondary.BackColor.Equals(Color.Red))) {
+            else if ((primary.BackColor.Equals(Color.Red)) || (marking.BackColor.Equals(Color.Red)) || (retraction.BackColor.Equals(Color.Red)) || (insulator.BackColor.Equals(Color.Red)) || (secondary.BackColor.Equals(Color.Red)))
+            {
                 try
                 {
                     string conn = "server=localhost;uid=root;" +
@@ -342,7 +354,7 @@ namespace HU
                     con.Open();
                     read = com.ExecuteReader();
                     MessageBox.Show("Data updated");
-                    while (read.Read()) { }
+                    while (read.Read()) { }//poner condicional para repetir el proceso dependiendo del item?
                     con.Close();
 
                 }
@@ -351,7 +363,7 @@ namespace HU
 
             }
         }
-      
+
         private void Form1_Load(object sender, EventArgs e)
         {
 
@@ -364,16 +376,15 @@ namespace HU
 
         private void button5_Click(object sender, EventArgs e)
         {
-           /* if (this.primary.BackColor == Color.Green)
-
-                this.primary.BackColor = Color.Red;
-            else*/
-                primary.BackColor = Color.Green;
+            /* if (this.primary.BackColor == Color.Green)
+                 this.primary.BackColor = Color.Red;
+             else*/
+            primary.BackColor = Color.Green;
         }
 
         private void retraction_Click(object sender, EventArgs e)
         {
-           if (this.retraction.BackColor == Color.Green)
+            if (this.retraction.BackColor == Color.Green)
 
                 this.retraction.BackColor = Color.Red;
             else
@@ -382,16 +393,13 @@ namespace HU
 
         private void insulator_DragOver(object sender, DragEventArgs e)
         {
-          /*  if (this.insulator.BackColor == Color.Green)
 
-                this.insulator.BackColor = Color.Red;
-            else*/
-                insulator.BackColor = Color.Green;
+            insulator.BackColor = Color.Green;
         }
 
         private void secondary_Click(object sender, EventArgs e)
         {
-           if (this.secondary.BackColor == Color.Green)
+            if (this.secondary.BackColor == Color.Green)
 
                 this.secondary.BackColor = Color.Red;
             else
@@ -409,12 +417,12 @@ namespace HU
 
         private void insulator_QueryContinueDrag(object sender, QueryContinueDragEventArgs e)
         {
-            
+
         }
 
         private void insulator_Click(object sender, EventArgs e)
         {
-           if (this.insulator.BackColor == Color.Green)
+            if (this.insulator.BackColor == Color.Green)
 
                 this.insulator.BackColor = Color.Red;
             else
@@ -428,20 +436,14 @@ namespace HU
 
         private void button1_Click_3(object sender, EventArgs e)
         {
-            /*updatee u = new updatee();
-            u.Show();*/
-             WriteXML();
-          //  conXML();
-
+            xml();
         }
 
         private void listView1_SelectedIndexChanged(object sender, EventArgs e)
         {
-                ListView.SelectedListViewItemCollection items = this.listView1.SelectedItems;
-                foreach (ListViewItem iitem in items)
-                {
-                   
-
+            ListView.SelectedListViewItemCollection items = this.listView1.SelectedItems;
+            foreach (ListViewItem iitem in items)
+            {
                 string j;
                 j = iitem.ToString();
                 MessageBox.Show("Seleccionaste el item: " + j);
@@ -486,101 +488,146 @@ namespace HU
             else
                 this.spinning.BackColor = Color.Green;
         }
-        public class Book {
-            public String title;
-            public String body;
-            public String Label;
-            public String ApplicationArea;
-            public String Sender;
-            public String LogicalID;
-            public String ComponentID;
-            public String ConfirmationCode;
-            public String CreationDateTime;
-            public String BODID;
-            public String DataArea;
-            public String Sync;
-            public String TenantID;
-            public String AccountingEntityID;
-            public String LocationID;
-            public String ActionCriteria;
-            public String ActionExpression_actionCode;
-            public String MESInterface;
-            public String MESHeader;
-            public String MESOrderNo;
-            public String Item;
-            public String MESCompletion;
-            public String Spool;
-            public String Date;
-            public String LotNumber;
-            public String Warehouse;
-            public String Quantity;
 
 
-          }
-          public  void WriteXML() {     
-           // Form1 ff = new Form1("");
-            Form2 ff2 = new Form2();
-            Book overview = new Book();
-              overview.title = "XML prueba";
-            overview.ApplicationArea="";
-            overview.Sender = "";
-            overview.LogicalID = "lid://infor.file.bod_in";
-            overview.ComponentID = "file";
-            overview.ConfirmationCode = "OnError";
-            overview.CreationDateTime = DateTime.Now.ToString("yyyy-MM-ddThh:mm:ssZ"); //si se requiere mas la la z al final poner u,s
-            overview.BODID = "infor-nid:infor:640:S_640:A99000001:?MESInterface&verb=Sync";
-            overview.DataArea = "";
-            overview.Sync = "";
-            overview.TenantID = "infor";
-            overview.AccountingEntityID = "640";//Leon indicators
-            overview.LocationID = "S_640";//Leon indicators
-            overview.ActionCriteria = "";
-            overview.ActionExpression_actionCode = "Add";
-            overview.MESInterface = "";
-            overview.MESHeader = "\n"+"\n";
-            //------------------------------DYNAMIC INFORMATION FROM MACHINES--------------------------------
-            overview.MESOrderNo = "DVR01"+ DateTime.Now.ToString("yyMMddhhmmssfff");//cambiar dependiendo si el txt tiene la informacion referente a la maquina DVR01, DVR02...
-            overview.Item = usarItem.ToString(); //valores del constructor de la clase Form2
-            overview.MESCompletion = "";
-            overview.Spool = ff2.ver1();//ultimo numero almacenado en db 
-            overview.Date = DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss"); ;//cambiar por valor de linea
-            overview.LotNumber = usarLot.ToString();//lote come from 3rd line on txt file by machines
-            overview.Warehouse = "LHBFG1";
-            overview.Quantity = usarQty.ToString();   //modificar con la cantidad del txt
-            //------------------------------------------------------------------------------------------------
-              System.Xml.Serialization.XmlSerializer writer =
-                  new System.Xml.Serialization.XmlSerializer(typeof(Book));
-
-              var path = @"C:\Users\Jesy\Desktop\" + "XMLPrueba.xml";
-              System.IO.FileStream file = System.IO.File.Create(path);
-              writer.Serialize(file, overview);
-            MessageBox.Show("XML SUCCESFUL");
-          file.Close();
-            //return exis;
-        }
-        public void conXML(string archivo)
-        {
-            var txt = string.Empty;           
-                //Metodo tiene que aplicarse antes de que se mueva el archivo de carpeta para poder convertirlo en XML
-
-                //agregar el archivo que se está leyendo en forma dinamica
-                using (var stream = File.OpenText(@"C:\Users\Jesy\Desktop\origen\" + archivo))
-                {
-                    txt = stream.ReadToEnd();
-                }
-
-                var xml = new XDocument(
-      new XElement("Data",
-          new XElement("Info", txt)));
-                //falta agregar el nombre dinámico para el archivo
-                xml.Save(Path.ChangeExtension(@"C:\Users\Jesy\Desktop\archive\", "PRUEBAXML.xml"));
-                MessageBox.Show("Se generó el archivo con éxito");
-        
-        }
 
         private void button3_Click(object sender, EventArgs e)
         {
             upStatusOK();
+        }
+
+        private void xml()
+        {
+            Form2 ff2 = new Form2();
+            XmlDocument doc = new XmlDocument();//creacion de nuevo xml
+
+            //abertura general de todo el proyecto
+            string direc = "SyncMESInterface";
+            XmlElement general = doc.CreateElement(direc);
+            general.SetAttribute("xmlns", "http://schema.infor.com/InforOAGIS/2");
+            general.SetAttribute("releasedID", "9.2");
+            general.SetAttribute("versionID", "2.12.x");
+            doc.AppendChild(general);
+
+            //comentarios
+            /* XmlElement autor = doc.CreateElement(("comentario"));
+              autor.AppendChild(doc.CreateTextNode("@author: CMES COF:LEON @date: " + DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss")));
+              autor.ToString();
+              general.CreateComment(autor.ToString());*/
+
+
+            //nodo principal ApplicationArea
+            XmlElement AppA = doc.CreateElement("AplicationArea");
+            general.AppendChild(AppA);
+
+            //contenido nodo ApplicationArea
+            XmlElement sender = doc.CreateElement("Sender");
+            AppA.AppendChild(sender);
+
+            //contenido nodo Sender
+            XmlElement logical = doc.CreateElement("LogicalID");
+            logical.AppendChild(doc.CreateTextNode("lid://infor.file.bod_in"));
+            sender.AppendChild(logical);
+
+            XmlElement component = doc.CreateElement("ComponentID");
+            component.AppendChild(doc.CreateTextNode("file"));
+            sender.AppendChild(component);
+
+            XmlElement confirmation = doc.CreateElement("ConfirmationCode");
+            confirmation.AppendChild(doc.CreateTextNode("OnError"));
+            sender.AppendChild(confirmation);
+
+            //contenido al nivel de sender
+            XmlElement creation = doc.CreateElement("CreationDateTime");
+            creation.AppendChild(doc.CreateTextNode(DateTime.Now.ToString("yyyy-MM-ddThh:mm:ssZ")));
+            AppA.AppendChild(creation);
+
+            XmlElement bodid = doc.CreateElement("BODID");
+            bodid.AppendChild(doc.CreateTextNode("infor-nid:infor:640:S_640:A99000001:?MESInterface&verb=Sync"));
+            AppA.AppendChild(bodid);
+
+
+            /* XmlElement otro = doc.CreateElement("otro");
+             otro.AppendChild(doc.CreateTextNode("parentesis"));
+             inf.AppendChild(otro);*/
+
+            //nodo principal DataArea
+            XmlElement DaA = doc.CreateElement("DataArea");
+            general.AppendChild(DaA);
+
+            //contenido nodo DataArea
+            XmlElement sync = doc.CreateElement("Sync");
+            DaA.AppendChild(sync);
+
+            //contenido nodo sync
+            XmlElement tenantid = doc.CreateElement("TenantID");
+            tenantid.AppendChild(doc.CreateTextNode("infor"));
+            sync.AppendChild(tenantid);
+
+            XmlElement accounting = doc.CreateElement("AccountingEntityID");
+            accounting.AppendChild(doc.CreateTextNode("640"));
+            sync.AppendChild(accounting);
+
+            XmlElement location = doc.CreateElement("LocationID");
+            location.AppendChild(doc.CreateTextNode("S_640"));
+            sync.AppendChild(location);
+
+            //nodo interino de sync
+            XmlElement action = doc.CreateElement("ActionCriteria");
+            sync.AppendChild(action);
+
+            string express = "ActionExpression";
+            XmlElement expression = doc.CreateElement(express);
+            expression.SetAttribute("actionCode", "Add");
+            action.AppendChild(expression);
+
+            //contenido nodo DataArea
+            XmlElement mesinterface = doc.CreateElement("MESInterface");
+            DaA.AppendChild(mesinterface);
+
+            //contenido nodo Mesinterface
+            XmlElement mesheader = doc.CreateElement("MESHeader");
+            mesinterface.AppendChild(mesheader);
+
+            //contenido nodo mesheader
+            //------------------------------DYNAMIC INFORMATION FROM MACHINES--------------------------------
+            XmlElement mesorder = doc.CreateElement("MESOrderNo");
+            mesorder.AppendChild(doc.CreateTextNode("DVR01" + DateTime.Now.ToString("yyMMddhhmmssfff")));
+            mesheader.AppendChild(mesorder);
+
+            XmlElement item = doc.CreateElement("Item");
+            item.AppendChild(doc.CreateTextNode(usarItem.ToString()));
+            mesheader.AppendChild(item);
+
+            //contenido de nodo dentro de mesheader
+            XmlElement mescompletion = doc.CreateElement("MESCompletion");
+            mesheader.AppendChild(mescompletion);
+
+            //contenido del nodo mescompletion
+            XmlElement spool = doc.CreateElement("Spool");
+            spool.AppendChild(doc.CreateTextNode(ff2.ver1()));
+            mescompletion.AppendChild(spool);
+
+            XmlElement date = doc.CreateElement("Date");
+            date.AppendChild(doc.CreateTextNode(DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss")));
+            mescompletion.AppendChild(date);
+
+            XmlElement lotnumber = doc.CreateElement("LotNumber");
+            lotnumber.AppendChild(doc.CreateTextNode(usarLot.ToString()));
+            mescompletion.AppendChild(lotnumber);
+
+            XmlElement whs = doc.CreateElement("Warehouse");
+            whs.AppendChild(doc.CreateTextNode("LHBFG1"));
+            mescompletion.AppendChild(whs);
+
+            XmlElement qty = doc.CreateElement("Quantity");
+            qty.AppendChild(doc.CreateTextNode(usarQty.ToString()));
+            mescompletion.AppendChild(qty);
+
+            //save the document
+            doc.Save(@"C:\\Users\\Jesy\\Desktop\\" + (("DVR01" + DateTime.Now.ToString("yyyyMMddhhmmss")) + ".xml"));
+
+            //revisar el DV01 cuando este en funcionamiento en lineas y detectar qué máquina es la que se va a usar para cambiarla
         }
     }
 }
